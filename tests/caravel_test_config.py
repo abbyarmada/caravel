@@ -16,13 +16,14 @@ if 'CARAVEL__SQLALCHEMY_DATABASE_URI' in os.environ:
 SQL_CELERY_DB_FILE_PATH = '/tmp/celerydb.sqlite'
 SQL_CELERY_RESULTS_DB_FILE_PATH = '/tmp/celery_results.sqlite'
 SQL_SELECT_AS_CTA = True
+SQL_MAX_ROW = 666
 
 
 class CeleryConfig(object):
     BROKER_URL = 'sqla+sqlite:///' + SQL_CELERY_DB_FILE_PATH
-    CELERY_IMPORTS = ('caravel.tasks', )
+    CELERY_IMPORTS = ('caravel.sql_lab', )
     CELERY_RESULT_BACKEND = 'db+sqlite:///' + SQL_CELERY_RESULTS_DB_FILE_PATH
-    CELERY_ANNOTATIONS = {'tasks.add': {'rate_limit': '10/s'}}
+    CELERY_ANNOTATIONS = {'sql_lab.add': {'rate_limit': '10/s'}}
     CONCURRENCY = 1
 CELERY_CONFIG = CeleryConfig
 
